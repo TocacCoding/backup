@@ -117,21 +117,21 @@ namespace WindowsFormsApplication1
             int tX = 1845;
             int tY = 151;
 
-            if (GetPixel(redX, redY) != hAux)
+            if (GetPixel(redX, redY) != hAux && GetPixel(tX, tY) == tAux)
             {
-               if (GetPixel(tX, tY) == tAux) red();
+                red();
             }
-            else if (GetPixel(yellowX, yellowY) != hAux)
+            else if (GetPixel(yellowX, yellowY) != hAux && GetPixel(tX, tY) == tAux)
             {
-                if (GetPixel(tX, tY) == tAux) yellow();
+                yellow();
             }
-            else if (GetPixel(greenX, greenY) != hAux)
+            else if (GetPixel(greenX, greenY) != hAux && GetPixel(tX, tY) == tAux)
             {
-                if (GetPixel(tX, tY) == tAux) green();
+                green();
             }
-            else if (GetPixel(mX, mY) != mAux && GetPixel(greenX, greenY) == hAux)
+            else if (GetPixel(mX, mY) != mAux && GetPixel(greenX, greenY) == hAux && GetPixel(tX, tY) == tAux)
             {
-                if (GetPixel(tX, tY) == tAux) ma();
+                ma();
             }
 
         }
