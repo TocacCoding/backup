@@ -129,7 +129,7 @@ namespace WindowsFormsApplication1
             {
                 green();
             }
-            else if (GetPixel(mX, mY) != mAux && GetPixel(greenX, greenY) == hAux && GetPixel(tX, tY) == tAux)
+            else if (GetPixel(mX, mY) != mAux && GetPixel(yellowX, yellowY) == hAux && GetPixel(tX, tY) == tAux)
             {
                 ma();
             }
