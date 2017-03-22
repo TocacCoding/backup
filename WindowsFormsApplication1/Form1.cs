@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //MessageBox.Show(GetPixel(1845, 151).ToString());
+            //MessageBox.Show(GetPixel(1857, 234).ToString());
         }
 
         public static void focus()
@@ -87,35 +87,39 @@ namespace WindowsFormsApplication1
             Thread.Sleep(1250);
         }
 
-        public void ea()
+        public void mw()
         {
             focus();
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F8);
+            s.Keyboard.KeyPress(VirtualKeyCode.F3);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             // no go zone
-            int tAux = -14991265;
-            int hAux = -2404529;
-            int mAux = -10132752;
+            int tAux = -14991265;//-14991265;
+            int hAux = -2404529;//-2404529;
+            int mAux = -10132752;//-10132752;
+            int mmAux = -11317056;
             // end of
 
-            int redX = 1815;
-            int redY = 220; 
+            int redX = 1820; //1820
+            int redY = 220;  //220
 
-            int yellowX = 1830;
-            int yellowY = 220;
+            int yellowX = 1835; //1835
+            int yellowY = 220; //220
 
-            int greenX = 1850;
-            int greenY = 220;
+            int greenX = 1850; //1850
+            int greenY = 220; //220
 
-            int mX = 1829;
-            int mY = 234;
+            int mX = 1830; //1830
+            int mY = 234; //234
 
-            int tX = 1845;
-            int tY = 151;
+            int mmX = 1857; //1857
+            int mmY = 234; //234
+
+            int tX = 1845; //1845
+            int tY = 151; //151
 
             if (GetPixel(redX, redY) != hAux && GetPixel(tX, tY) == tAux)
             {
@@ -133,13 +137,11 @@ namespace WindowsFormsApplication1
             {
                 ma();
             }
+            else if (GetPixel(mmX, mmY) == mmAux && GetPixel(yellowX, yellowY) == hAux && GetPixel(tX, tY) == tAux)
+            {
+                mw();
+            }
 
         }
-
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            ea();
-        }
-
     }
 }
