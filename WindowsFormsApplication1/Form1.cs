@@ -24,10 +24,9 @@ namespace WindowsFormsApplication1
         private void Form1_Load(object sender, EventArgs e)
         {
             //Thread.Sleep(7000);
-            //MessageBox.Show(GetPixel(945, 64).ToString());
+            //MessageBox.Show(GetPixel(960, 53).ToString());
         }
         /// Help funcs
-        // Get pixel from screen
         int GetPixel(int X, int Y)
         {
             Bitmap bmp = new Bitmap(1, 1, PixelFormat.Format32bppPArgb);
@@ -41,26 +40,22 @@ namespace WindowsFormsApplication1
         {
             InputSimulator s = new InputSimulator();
             s.Keyboard.KeyPress(VirtualKeyCode.F12);
-            Thread.Sleep(955);
         }
         public void yellow()
         {
             InputSimulator s = new InputSimulator();
             s.Keyboard.KeyPress(VirtualKeyCode.F11);
-            Thread.Sleep(955);
         }
         public void green()
         {
             InputSimulator s = new InputSimulator();
             s.Keyboard.KeyPress(VirtualKeyCode.F10);
-            Thread.Sleep(955);
         }
         /// mana funcs
         public void m()
         {
             InputSimulator s = new InputSimulator();
             s.Keyboard.KeyPress(VirtualKeyCode.F9);
-            Thread.Sleep(1250);
         }
         public void mw()
         {
@@ -68,24 +63,49 @@ namespace WindowsFormsApplication1
             s.Keyboard.KeyPress(VirtualKeyCode.F3);
         }
         /// status checker funcs
+        // sample
+        public bool isCondition()
+        {
+            int conditionAux = -1;
+            int y = 76;
+            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            foreach (int x in coords)
+            {
+                if (GetPixel(x, y) == conditionAux) return true;
+            }
+            return false;
+        }
+        // end of sample
         public bool isPZ()
         {
-            // coords status
-            int statusAux = -13534304;
-            int X1 = 954;
-            int X2 = 964;
-            int X3 = 945;
-            int X4 = 973;
-            int X5 = 936;
-            int X6 = 982;
-            int X7 = 927;
-            int Y = 64;
-
-            if (GetPixel(X1, Y) == statusAux || GetPixel(X2, Y) == statusAux || GetPixel(X3, Y) == statusAux ||
-                GetPixel(X4, Y) == statusAux || GetPixel(X5, Y) == statusAux || GetPixel(X6, Y) == statusAux ||
-                GetPixel(X7, Y) == statusAux)
+            int pzAux = -15718862;
+            int y = 76;
+            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            foreach (int x in coords)
             {
-                return true;
+                if (GetPixel(x, y) == pzAux) return true;
+            }
+            return false;
+        }
+        public bool isHasted()
+        {
+            int hastedAux = -6385037;
+            int y = 76;
+            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            foreach (int x in coords)
+            {
+                if (GetPixel(x, y) == hastedAux) return true;
+            }
+            return false;
+        }
+        public bool isHungry()
+        {
+            int hungryAux = -9550811;
+            int y = 76;
+            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            foreach (int x in coords)
+            {
+                if (GetPixel(x, y) == hungryAux) return true;
             }
             return false;
         }
@@ -94,6 +114,11 @@ namespace WindowsFormsApplication1
         {
             InputSimulator s = new InputSimulator();
             s.Keyboard.KeyPress(VirtualKeyCode.F8);
+        }
+        public void haste()
+        {
+            InputSimulator s = new InputSimulator();
+            s.Keyboard.KeyPress(VirtualKeyCode.F5);
         }
         public void test()
         {
@@ -110,9 +135,9 @@ namespace WindowsFormsApplication1
             int cY = 107;
             // size hp/mana 745px (10% == 74px)
             // hp starts 950-
-            int redX = 950-74-74-74-74; // 40%
-            int yellowX = 950-74-74-37; // 25%
-            int greenX = 950-74;        // 10%
+            int redX = 950-74-74-74-74-74; // 50%
+            int yellowX = 950-74-74-74;    // 30%
+            int greenX = 950-74;           // 10%
             int hY = 32;
             // mp starts 970+
             int mX = 970+74+74+74; // 30%
@@ -143,13 +168,18 @@ namespace WindowsFormsApplication1
         }
         private void timer2_Tick(object sender, EventArgs e)
         {
+            // no go zone
             int cX = 1882;
             int cY = 107;
+            int c2X = 960;
+            int c2Y = 53;
             int controlAux = -15327199;
-
-            if (GetPixel(cX, cY) == controlAux && isPZ() == false)
+            int control2Aux = -13220541;
+            // end of
+            if (GetPixel(cX, cY) == controlAux && GetPixel(c2X, c2Y) == control2Aux && isPZ() == false)
             {
-                eat();
+                if (isHungry()) eat();
+                else if (isHasted() == false) haste();
             }
         }
         // nao apagar further down
