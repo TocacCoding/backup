@@ -109,6 +109,28 @@ namespace WindowsFormsApplication1
             }
             return false;
         }
+        public bool isParalized()
+        {
+            int paralizeAux = -1;
+            int y = 76;
+            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            foreach (int x in coords)
+            {
+                if (GetPixel(x, y) == paralizeAux) return true;
+            }
+            return false;
+        }
+        public bool isEmpowered()
+        {
+            int empoweredAux = -1;
+            int y = 76;
+            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            foreach (int x in coords)
+            {
+                if (GetPixel(x, y) == empoweredAux) return true;
+            }
+            return false;
+        }
         /// misc funcs
         public void eat()
         {
@@ -119,6 +141,11 @@ namespace WindowsFormsApplication1
         {
             InputSimulator s = new InputSimulator();
             s.Keyboard.KeyPress(VirtualKeyCode.F5);
+        }
+        public void empower()
+        {
+            InputSimulator s = new InputSimulator();
+            s.Keyboard.KeyPress(VirtualKeyCode.F6);
         }
         public void test()
         {
@@ -166,6 +193,9 @@ namespace WindowsFormsApplication1
             }
             // end of 
         }
+        // auto functions status
+        int autoHaste = 0;
+        int autoEmpower = 0;
         private void timer2_Tick(object sender, EventArgs e)
         {
             // no go zone
@@ -178,8 +208,12 @@ namespace WindowsFormsApplication1
             // end of
             if (GetPixel(cX, cY) == controlAux && GetPixel(c2X, c2Y) == control2Aux && isPZ() == false)
             {
-                if (isHungry()) eat();
-                else if (isHasted() == false) haste();
+                // always ON funcs
+                if (isParalized()) haste();
+                else if (isHungry()) eat();
+                // on demand funcs
+                else if (isHasted() == false && autoHaste == 1) haste();
+                else if (isEmpowered() == false && autoEmpower == 1) empower();
             }
         }
         // nao apagar further down
