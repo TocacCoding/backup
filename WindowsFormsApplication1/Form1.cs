@@ -24,7 +24,7 @@ namespace WindowsFormsApplication1
         private void Form1_Load(object sender, EventArgs e)
         {
             //Thread.Sleep(7000);
-            //MessageBox.Show(GetPixel(960, 53).ToString());
+            //MessageBox.Show(GetPixel(943, 76).ToString());
         }
         /// Help funcs
         int GetPixel(int X, int Y)
@@ -122,13 +122,37 @@ namespace WindowsFormsApplication1
         }
         public bool isEmpowered()
         {
-            int empoweredAux = -1;
+            int empoweredAux = -14743548;
             int y = 76;
             int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
             foreach (int x in coords)
             {
                 if (GetPixel(x, y) == empoweredAux) return true;
             }
+            return false;
+        }
+        public bool isMounted()
+        {
+            int x = 1775;
+            int y = 230;
+            int mountedAux = -13718993;
+            if (GetPixel(x, y) == mountedAux) return true;
+            return false;
+        }
+        public bool isLifeRing()
+        {
+            int x = 1780;
+            int y = 419;
+            int lifeRingAux = -9046944;
+            if (GetPixel(x, y) == lifeRingAux) return true;
+            return false;
+        }
+        public bool isEnergyRing()
+        {
+            int x = 1780;
+            int y = 419;
+            int energyRingAux = -8847393;
+            if (GetPixel(x, y) == energyRingAux) return true;
             return false;
         }
         /// misc funcs
@@ -145,12 +169,33 @@ namespace WindowsFormsApplication1
         public void empower()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F6);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_9);
         }
-        public void test()
+        public void mount()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F4);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_T);
+        }
+        /// ring funcs
+        public void equipLifeRing()
+        {
+            InputSimulator s = new InputSimulator();
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_6);
+        }
+        public void unequipLifeRing()
+        {
+            InputSimulator s = new InputSimulator();
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_7);
+        }
+        public void equipEnergyRing()
+        {
+            InputSimulator s = new InputSimulator();
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_2);
+        }
+        public void unequipEnergyRing()
+        {
+            InputSimulator s = new InputSimulator();
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_8);
         }
         /// core
         private void timer1_Tick(object sender, EventArgs e)
@@ -191,11 +236,12 @@ namespace WindowsFormsApplication1
             {
                 mw();
             }
-            // end of 
         }
         // auto functions status
-        int autoHaste = 0;
-        int autoEmpower = 0;
+        public int autoHaste = 0;
+        public int autoEnergyRing = 0;
+        public int autoLifeRing = 0;
+        public int autoEmpower = 0;
         private void timer2_Tick(object sender, EventArgs e)
         {
             // no go zone
@@ -209,11 +255,19 @@ namespace WindowsFormsApplication1
             if (GetPixel(cX, cY) == controlAux && GetPixel(c2X, c2Y) == control2Aux && isPZ() == false)
             {
                 // always ON funcs
-                if (isParalized()) haste();
+                //if (isParalized()) haste();
+                if (isMounted() == false) mount();
                 else if (isHungry()) eat();
                 // on demand funcs
+                else if (isEnergyRing() == false && autoEnergyRing == 1 && autoLifeRing == 0) equipEnergyRing();
+                else if (isLifeRing() == false && autoLifeRing == 1 && autoEnergyRing == 0) equipLifeRing();
                 else if (isHasted() == false && autoHaste == 1) haste();
                 else if (isEmpowered() == false && autoEmpower == 1) empower();
+            }
+            else if (GetPixel(cX, cY) == controlAux && GetPixel(c2X, c2Y) == control2Aux && isPZ() == true)
+            {
+                if (isEnergyRing() == true) unequipEnergyRing();
+                else if (isLifeRing() == true) unequipLifeRing();
             }
         }
         // nao apagar further down
