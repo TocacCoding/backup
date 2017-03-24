@@ -33,6 +33,7 @@ namespace WindowsFormsApplication1
             Graphics grp = Graphics.FromImage(bmp);
             grp.CopyFromScreen(new Point(X, Y), Point.Empty, new Size(1, 1));
             grp.Save();
+            grp.Dispose();
             return bmp.GetPixel(0, 0).ToArgb();
         }        
         /// heal funcs
@@ -260,7 +261,7 @@ namespace WindowsFormsApplication1
                 else if (isHungry()) eat();
                 // on demand funcs
                 else if (isEnergyRing() == false && autoEnergyRing == 1 && autoLifeRing == 0) equipEnergyRing();
-                else if (isLifeRing() == false && autoLifeRing == 1 && autoEnergyRing == 0) equipLifeRing();
+                else if (isLifeRing() == false && autoLifeRing == 1 && autoEnergyRing == 0 && isEnergyRing() == false) equipLifeRing();
                 else if (isHasted() == false && autoHaste == 1) haste();
                 else if (isEmpowered() == false && autoEmpower == 1) empower();
             }
@@ -269,6 +270,7 @@ namespace WindowsFormsApplication1
                 if (isEnergyRing() == true) unequipEnergyRing();
                 else if (isLifeRing() == true) unequipLifeRing();
             }
+            else GC.Collect();
         }
         // nao apagar further down
     }
