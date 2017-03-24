@@ -64,19 +64,6 @@ namespace WindowsFormsApplication1
             s.Keyboard.KeyPress(VirtualKeyCode.F3);
         }
         /// status checker funcs
-        // sample
-        public bool isCondition()
-        {
-            int conditionAux = -1;
-            int y = 76;
-            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
-            foreach (int x in coords)
-            {
-                if (GetPixel(x, y) == conditionAux) return true;
-            }
-            return false;
-        }
-        // end of sample
         public bool isPZ()
         {
             int pzAux = -15718862;
@@ -112,7 +99,7 @@ namespace WindowsFormsApplication1
         }
         public bool isParalized()
         {
-            int paralizeAux = -1;
+            int paralizeAux = -14545657;
             int y = 76;
             int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
             foreach (int x in coords)
@@ -253,15 +240,16 @@ namespace WindowsFormsApplication1
             int controlAux = -15327199;
             int control2Aux = -13220541;
             // end of
+            GC.Collect();
             if (GetPixel(cX, cY) == controlAux && GetPixel(c2X, c2Y) == control2Aux && isPZ() == false)
             {
                 // always ON funcs
-                //if (isParalized()) haste();
-                if (isMounted() == false) mount();
+                if (isParalized()) haste();
+                else if (isMounted() == false) mount();
                 else if (isHungry()) eat();
                 // on demand funcs
-                else if (isEnergyRing() == false && autoEnergyRing == 1 && autoLifeRing == 0) equipEnergyRing();
-                else if (isLifeRing() == false && autoLifeRing == 1 && autoEnergyRing == 0 && isEnergyRing() == false) equipLifeRing();
+                else if (isEnergyRing() == false && autoEnergyRing == 1) equipEnergyRing();
+                else if (isLifeRing() == false && autoLifeRing == 1 && isEnergyRing() == false) equipLifeRing();
                 else if (isHasted() == false && autoHaste == 1) haste();
                 else if (isEmpowered() == false && autoEmpower == 1) empower();
             }
@@ -270,7 +258,6 @@ namespace WindowsFormsApplication1
                 if (isEnergyRing() == true) unequipEnergyRing();
                 else if (isLifeRing() == true) unequipLifeRing();
             }
-            else GC.Collect();
         }
         // nao apagar further down
     }
