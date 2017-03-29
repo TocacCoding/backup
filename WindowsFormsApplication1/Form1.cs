@@ -26,7 +26,7 @@ namespace WindowsFormsApplication1
             //Thread.Sleep(7000);
             //MessageBox.Show(GetPixel(943, 76).ToString());
         }
-        /// Help funcs
+        /// help funcs
         int GetPixel(int X, int Y)
         {
             Bitmap bmp = new Bitmap(1, 1, PixelFormat.Format32bppPArgb);
@@ -35,40 +35,56 @@ namespace WindowsFormsApplication1
             grp.Save();
             grp.Dispose();
             return bmp.GetPixel(0, 0).ToArgb();
-        }        
+        }
+        public bool isMaximized()
+        {
+            int controlAux = -15327199;
+            int controlX = 1882;
+            int controlY = 107;
+            if (GetPixel(controlX, controlY) == controlAux) return true;
+            return false;
+        }
+        public bool isClear()
+        {
+            int control2Aux = -13220541;
+            int control2X = 960;
+            int control2Y = 53;
+            if (GetPixel(control2X, control2Y) == control2Aux) return true;
+            return false;
+        }
         /// heal funcs
-        public void red()
+        public void redHeal()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F12);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_0);
         }
-        public void yellow()
+        public void yellowHeal()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F11);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_9);
         }
-        public void green()
+        public void greenHeal()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F10);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_8);
         }
         /// mana funcs
-        public void m()
+        public void manaDrinker()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F9);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_7);
         }
-        public void mw()
+        public void manaWaster()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F3);
+            s.Keyboard.KeyPress(VirtualKeyCode.NUMPAD5);
         }
         /// status checker funcs
         public bool isPZ()
         {
             int pzAux = -15718862;
-            int y = 76;
-            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            int y = 76;            
+            int[] coords = { 952, 933, 971, 943, 962, 924, 981, 905, 1000 };
             foreach (int x in coords)
             {
                 if (GetPixel(x, y) == pzAux) return true;
@@ -79,7 +95,7 @@ namespace WindowsFormsApplication1
         {
             int hastedAux = -6385037;
             int y = 76;
-            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            int[] coords = { 952, 933, 971, 943, 962, 924, 981, 905, 1000 };
             foreach (int x in coords)
             {
                 if (GetPixel(x, y) == hastedAux) return true;
@@ -90,18 +106,18 @@ namespace WindowsFormsApplication1
         {
             int hungryAux = -9550811;
             int y = 76;
-            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            int[] coords = { 952, 933, 971, 943, 962, 924, 981, 905, 1000 };
             foreach (int x in coords)
             {
                 if (GetPixel(x, y) == hungryAux) return true;
             }
             return false;
         }
-        public bool isParalized()
+        public bool isParalyzed()
         {
             int paralizeAux = -14545657;
             int y = 76;
-            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            int[] coords = { 952, 933, 971, 943, 962, 924, 981, 905, 1000 };
             foreach (int x in coords)
             {
                 if (GetPixel(x, y) == paralizeAux) return true;
@@ -112,7 +128,7 @@ namespace WindowsFormsApplication1
         {
             int empoweredAux = -14743548;
             int y = 76;
-            int[] coords = { 952, 933, 952, 971, 943, 962, 924, 981, 905, 1000 };
+            int[] coords = { 952, 933, 971, 943, 962, 924, 981, 905, 1000 };
             foreach (int x in coords)
             {
                 if (GetPixel(x, y) == empoweredAux) return true;
@@ -152,7 +168,7 @@ namespace WindowsFormsApplication1
         public void haste()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.F5);
+            s.Keyboard.KeyPress(VirtualKeyCode.NUMPAD2);
         }
         public void empower()
         {
@@ -173,7 +189,7 @@ namespace WindowsFormsApplication1
         public void unequipLifeRing()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.VK_7);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_4);
         }
         public void equipEnergyRing()
         {
@@ -183,81 +199,58 @@ namespace WindowsFormsApplication1
         public void unequipEnergyRing()
         {
             InputSimulator s = new InputSimulator();
-            s.Keyboard.KeyPress(VirtualKeyCode.VK_8);
+            s.Keyboard.KeyPress(VirtualKeyCode.VK_5);
         }
-        /// core
+        /// core starts here
+        // healer + anti paralyze
         private void timer1_Tick(object sender, EventArgs e)
         {
             // no go zone
-            int barAux = -13816270;
-            int controlAux = -15327199;
-            int cX = 1882;
-            int cY = 107;
-            // size hp/mana 745px (10% == 74px)
+            int emptyBarAux = -13816270;
+            // size hp 745px (10% == 74px)
             // hp starts 950-
-            int redX = 950-74-74-74-74-74; // 50%
-            int yellowX = 950-74-74-74;    // 30%
-            int greenX = 950-74;           // 10%
-            int hY = 32;
-            // mp starts 970+
-            int mX = 970+74+74+74; // 30%
-            int mmX = 971;
-            int mY = 32;
+            int redHealthX = 950-74-74-74-74-74; // 50%
+            int yellowHealthX = 950-74-74-74;    // 30%
+            int greenHealthX = 950-74;           // 10%
+            int healthY = 32;
             // logics - higher priority UP
-            if (GetPixel(redX, hY) == barAux && GetPixel(cX, cY) == controlAux)
+            if (isMaximized())
             {
-                red();
-            }
-            else if (GetPixel(yellowX, hY) == barAux && GetPixel(cX, cY) == controlAux)
-            {
-                yellow();
-            }
-            else if (GetPixel(greenX, hY) == barAux && GetPixel(cX, cY) == controlAux)
-            {
-               green();
-            }
-            else if (GetPixel(mX, mY) == barAux && GetPixel(cX, cY) == controlAux)
-            {
-                m();
-            }
-            else if (GetPixel(mmX, mY) != barAux && GetPixel(cX, cY) == controlAux)
-            {
-                mw();
+                if (GetPixel(redHealthX, healthY) == emptyBarAux) redHeal();
+                else if (GetPixel(yellowHealthX, healthY) == emptyBarAux) yellowHeal();
+                else if (GetPixel(greenHealthX, healthY) == emptyBarAux) greenHeal();
+                else if (isParalyzed() && isClear()) haste();
             }
         }
-        // auto functions status
-        public int autoHaste = 0;
-        public int autoEnergyRing = 0;
-        public int autoLifeRing = 0;
-        public int autoEmpower = 0;
+        // smart mana manager + eater
+        private bool smartMana = false;
         private void timer2_Tick(object sender, EventArgs e)
         {
             // no go zone
-            int cX = 1882;
-            int cY = 107;
-            int c2X = 960;
-            int c2Y = 53;
-            int controlAux = -15327199;
-            int control2Aux = -13220541;
-            // end of
+            int emptyBarAux = -13816270;
+            // size mana 745px (10% == 74px)
+            // mp starts 970+
+            int manaStartDrinkX = 970 + 74 + 74 + 74 + 74 + 74; // 50%
+            int manaStopDrinkX = 970 + 74 + 74 + 37; // 25%
+            int maxManaX = 971;
+            int manaY = 32;
+            // logics - higher priority UP
+            if (isMaximized())
+            {
+                if (smartMana)
+                {
+                    manaDrinker();
+                    if (GetPixel(manaStopDrinkX, manaY) != emptyBarAux) smartMana = false;
+                }
+                else if (GetPixel(manaStartDrinkX, manaY) == emptyBarAux) smartMana = true;
+                else if (GetPixel(maxManaX, manaY) != emptyBarAux) manaWaster();
+                else if (isHungry() && isClear() && isPZ() == false) eat();
+            }
+        }
+        // garbage collection
+        private void timer3_Tick(object sender, EventArgs e)
+        {
             GC.Collect();
-            if (GetPixel(cX, cY) == controlAux && GetPixel(c2X, c2Y) == control2Aux && isPZ() == false)
-            {
-                // always ON funcs
-                if (isParalized()) haste();
-                else if (isMounted() == false) mount();
-                else if (isHungry()) eat();
-                // on demand funcs
-                else if (isEnergyRing() == false && autoEnergyRing == 1) equipEnergyRing();
-                else if (isLifeRing() == false && autoLifeRing == 1 && isEnergyRing() == false) equipLifeRing();
-                else if (isHasted() == false && autoHaste == 1) haste();
-                else if (isEmpowered() == false && autoEmpower == 1) empower();
-            }
-            else if (GetPixel(cX, cY) == controlAux && GetPixel(c2X, c2Y) == control2Aux && isPZ() == true)
-            {
-                if (isEnergyRing() == true) unequipEnergyRing();
-                else if (isLifeRing() == true) unequipLifeRing();
-            }
         }
         // nao apagar further down
     }
